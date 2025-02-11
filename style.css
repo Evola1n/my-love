@@ -1,0 +1,167 @@
+/* Сброс отступов */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Фон страницы */
+body {
+    background: linear-gradient(to right, #ffccff, #ffe6f7);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Заголовок страницы */
+h1 {
+    text-align: center;
+    padding: 30px 0;
+    color: #99004d;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+/* Стиль хронологии */
+.timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+/* Линия хронологии */
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    background-color: #b3003b;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -3px;
+}
+
+/* Блок события */
+.entry {
+    padding: 20px 40px;
+    position: relative;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.entry.left {
+    left: 0;
+}
+
+.entry.right {
+    left: 50%;
+}
+
+/* Кружок на линии */
+.entry::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 6px solid #b3003b;
+    top: 30px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.entry.left::before {
+    right: -13px;
+}
+
+.entry.right::before {
+    left: -13px;
+}
+
+/* Контент события */
+.entry-content {
+    padding: 20px 30px;
+    background-color: #ffcce0;
+    position: relative;
+    border-radius: 6px;
+}
+
+.entry-content img {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.entry-content .date {
+    font-weight: bold;
+    color: #ff0066;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.entry-content p {
+    color: #660033;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+/* Финальное сообщение */
+.entry.final .entry-content {
+    background-color: #ffb3d9;
+    text-align: center;
+}
+
+.entry.final h2 {
+    font-size: 36px;
+    color: #b30047;
+    margin-bottom: 20px;
+}
+
+.entry.final p {
+    font-size: 20px;
+    color: #800040;
+    margin-bottom: 30px;
+}
+
+.entry.final img {
+    width: 150px;
+    margin-top: 20px;
+}
+
+/* Адаптивность для мобильных устройств */
+@media screen and (max-width: 768px) {
+    .entry {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+        left: 0;
+    }
+
+    .entry::before {
+        left: 60px;
+    }
+
+    .timeline::after {
+        left: 30px;
+    }
+
+    .entry.left,
+    .entry.right {
+        left: 0;
+    }
+
+    .entry.left::before,
+    .entry.right::before {
+        left: 60px;
+    }
+}
+.entry-content video {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+.entry-content audio {
+    width: 100%;
+    margin-top: 15px;
+}
+

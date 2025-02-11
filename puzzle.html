@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Пазл для любимой</title>
+    <style>
+        body {
+            background-color: #ffe6e6;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #puzzle {
+            width: 400px;
+            height: 400px;
+            margin: 20px auto;
+            position: relative;
+            border: 2px solid #ff6699;
+        }
+        .piece {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            cursor: pointer;
+            background-image: url('images/photo_2025-02-04_19-26-36.jpg');
+            background-size: 400px 400px;
+            border: 1px solid #fff;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Собери пазл нашей совместной фотографии</h1>
+    <div id="puzzle"></div>
+
+    <script src="puzzle2.js"></script>
+</body>
+</html>
