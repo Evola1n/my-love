@@ -1,84 +1,253 @@
 <!DOCTYPE html>
 <html lang="ru">
-<link rel="stylesheet" href="styles.css">
 <head>
-    
-
     <meta charset="UTF-8">
-    <title>Пазл для любимой</title>
+    <title>Тест для тебя</title>
     <style>
-        body {
-            background-color: #ffe6e6;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        #puzzle {
-            width: 400px;
-            height: 400px;
-            margin: 20px auto;
-            position: relative;
-            border: 2px solid #ff6699;
-        }
-        .piece {
-            width: 100px;
-            height: 100px;
-            position: absolute;
-            cursor: pointer;
-            background-image: url('images/19jan.jpg');
-            background-size: 400px 400px;
-            border: 1px solid #fff;
-            box-sizing: border-box;
-        }
+/* Подключение шрифта */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+/* Общие стили */
+body {
+    background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Анимированные сердечки на фоне */
+body::before {
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('hearts.png') center/cover no-repeat;
+    opacity: 0.1;
+    z-index: -1;
+    animation: heartsAnimation 20s linear infinite;
+}
+
+@keyframes heartsAnimation {
+    0% { background-position: 0 0; }
+    100% { background-position: -1000px 1000px; }
+}
+
+/* Заголовок */
+h1 {
+    color: #fff;
+    text-align: center;
+    margin-top: 50px;
+    font-size: 3em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: fadeInDown 1s ease-in-out;
+}
+
+@keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-50px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Форма */
+form {
+    max-width: 600px;
+    margin: 50px auto;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1s ease-in-out;
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(50px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Вопросы */
+.question {
+    margin-bottom: 25px;
+}
+
+.question p {
+    font-weight: 500;
+    font-size: 1.2em;
+    color: #ff6f91;
+}
+
+.options {
+    margin-top: 10px;
+}
+
+.options label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.options label:hover {
+    color: #ff6f91;
+    transform: translateX(5px);
+}
+
+.options input {
+    margin-right: 10px;
+}
+
+/* Кнопка */
+#checkBtn {
+    display: inline-block;
+    background: linear-gradient(45deg, #ff6f91, #ff9671);
+    color: #fff;
+    padding: 15px 30px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition:  0.3s, box-shadow 0.3s;
+    box-shadow: 0 6px 15px rgba(255, 111, 145, 0.4);
+}
+
+#checkBtn:hover {
+    background: linear-gradient(45deg, #ff9671, #ff6f91);
+    box-shadow: 0 8px 20px rgba(255, 111, 145, 0.6);
+}
+
+/* Правильные и неправильные ответы */
+.correct {
+    color: green !important;
+}
+
+.incorrect {
+    color: red !important;
+}
+
+/* Мобильная адаптивность */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5em;
+        margin-top: 30px;
+    }
+
+    form {
+        padding: 20px;
+        margin: 30px 20px;
+    }
+
+    #checkBtn {
+        font-size: 1em;
+        padding: 12px 25px;
+    }
+}
+
+/* Плавающие сердечки */
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.heart {
+    position: fixed;
+    bottom: -150px;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: rgba(255, 105, 135, 0.8);
+    animation: float 10s infinite ease-in;
+    transform: translateX(-50%);
+    opacity: 0;
+}
+
+/* Разные размеры и задержки для сердечек */
+.heart:nth-child(2) {
+    left: 20%;
+    width: 20px;
+    height: 20px;
+    animation-duration: 12s;
+    animation-delay: 2s;
+}
+
+.heart:nth-child(3) {
+    left: 70%;
+    width: 25px;
+    height: 25px;
+    animation-duration: 8s;
+    animation-delay: 4s;
+}
+
     </style>
 </head>
 <body>
-    
-    <h1>Собери пазл нашей совместной фотографии</h1>
-    <div id="puzzle"></div>
-    <canvas id="hearts"></canvas>
-    <script src="puzzle.js"></script>
+    <h1>Проверь, насколько хорошо ты меня знаешь 💖</h1>
+    <form id="quizForm">
+        <!-- Вопрос 1 -->
+        <div class="question">
+            <p>1. Как зовут моих кошек?</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="Мурка и Барсик"> Мурка и Барсик</label>
+                <label><input type="radio" name="q1" value="Синди и Гледис"> Синди и Гледис</label>
+                <label><input type="radio" name="q1" value="Лютик и Ромашка"> Лютик и Ромашка</label>
+            </div>
+        </div>
+        <!-- Вопрос 2 -->
+        <div class="question">
+            <p>2. Сколько лет я занимался танцами?</p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="2"> 2 года</label>
+                <label><input type="radio" name="q2" value="4"> 4 года</label>
+                <label><input type="radio" name="q2" value="6"> 6 лет</label>
+            </div>
+        </div>
+        <!-- Вопрос 3 -->
+        <div class="question">
+            <p>3. Когда у меня день рождения?</p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="2006-08-13"> 13 августа 2006</label>
+                <label><input type="radio" name="q3" value="2006-08-15"> 15 августа 2006</label>
+                <label><input type="radio" name="q3" value="2006-08-12"> 12 августа 2006</label>
+            </div>
+        </div>
+        <!-- Вопрос 4 -->
+        <div class="question">
+            <p>4. На какой позиции я играл в футбол?</p>
+            <div class="options">
+                <label><input type="radio" name="q4" value="Нападающий"> Нападающий</label>
+                <label><input type="radio" name="q4" value="ЛФА"> ЛФА</label>
+                <label><input type="radio" name="q4" value="ПФА"> ПФА</label>
+            </div>
+        </div>
+        <!-- Вопрос 5 -->
+        <div class="question">
+            <p>5. На какой позиции я играл в Dota?</p>
+            <div class="options">
+                <label><input type="radio" name="q5" value="Саппорт"> Саппорт</label>
+                <label><input type="radio" name="q5" value="Керри"> Керри</label>
+                <label><input type="radio" name="q5" value="2"> Мидер</label>
+            </div>
+        </div>
+        <!-- Вопрос 6 -->
+        <div class="question">
+            <p>6. Мой любимый персонаж из Dota?</p>
+            <div class="options">
+                <label><input type="radio" name="q6" value="Ember"> Ember</label>
+                <label><input type="radio" name="q6" value="Invoker"> Invoker</label>
+                <label><input type="radio" name="q6" value="Pudge"> Pudge</label>
+            </div>
+        </div>
+        <button type="button" id="checkBtn">Проверить ответы</button>
+    </form>
+
+    <script src="quiz.js"></script>
+
 </body>
-<script>
-    const canvas = document.getElementById('hearts');
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let hearts = [];
-
-    function resize() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    function createHeart() {
-        hearts.push({
-            x: Math.random() * width,
-            y: height + 10,
-            size: Math.random() * 2 + 1,
-            speed: Math.random() * 1 + 0.5
-        });
-    }
-
-    function drawHearts() {
-        ctx.clearRect(0, 0, width, height);
-        hearts.forEach((heart, i) => {
-            ctx.fillStyle = 'rgba(255, 105, 180, 0.7)';
-            ctx.beginPath();
-            ctx.moveTo(heart.x, heart.y);
-            ctx.bezierCurveTo(heart.x + heart.size, heart.y - heart.size, heart.x + heart.size * 2, heart.y + heart.size, heart.x, heart.y + heart.size * 2);
-            ctx.bezierCurveTo(heart.x - heart.size * 2, heart.y + heart.size, heart.x - heart.size, heart.y - heart.size, heart.x, heart.y);
-            ctx.fill();
-            heart.y -= heart.speed;
-            if (heart.y < -10) {
-                hearts.splice(i, 1);
-            }
-        });
-        requestAnimationFrame(drawHearts);
-    }
-
-    setInterval(createHeart, 200);
-    drawHearts();
-</script>
-
 </html>

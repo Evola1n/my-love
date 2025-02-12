@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<link rel="stylesheet" href="styles.css">
+<head>
+    
+
+    <meta charset="UTF-8">
+    <title>Пазл для любимой</title>
+    <style>
+        body {
+            background-color: #ffe6e6;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #puzzle {
+            width: 400px;
+            height: 400px;
+            margin: 20px auto;
+            position: relative;
+            border: 2px solid #ff6699;
+        }
+        .piece {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            cursor: pointer;
+            background-image: url('images/photo_2025-02-04_19-26-36.jpg');
+            background-size: 400px 400px;
+            border: 1px solid #fff;
+            box-sizing: border-box;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <h1>Собери пазл нашей совместной фотографии</h1>
+    <div id="puzzle"></div>
+    <canvas id="hearts"></canvas>
+    <script src="puzzle.js"></script>
+</body>
+<script>
+    const canvas = document.getElementById('hearts');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let hearts = [];
+
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function createHeart() {
+        hearts.push({
+            x: Math.random() * width,
+            y: height + 10,
+            size: Math.random() * 2 + 1,
+            speed: Math.random() * 1 + 0.5
+        });
+    }
+
+    function drawHearts() {
+        ctx.clearRect(0, 0, width, height);
+        hearts.forEach((heart, i) => {
+            ctx.fillStyle = 'rgba(255, 105, 180, 0.7)';
+            ctx.beginPath();
+            ctx.moveTo(heart.x, heart.y);
+            ctx.bezierCurveTo(heart.x + heart.size, heart.y - heart.size, heart.x + heart.size * 2, heart.y + heart.size, heart.x, heart.y + heart.size * 2);
+            ctx.bezierCurveTo(heart.x - heart.size * 2, heart.y + heart.size, heart.x - heart.size, heart.y - heart.size, heart.x, heart.y);
+            ctx.fill();
+            heart.y -= heart.speed;
+            if (heart.y < -10) {
+                hearts.splice(i, 1);
+            }
+        });
+        requestAnimationFrame(drawHearts);
+    }
+
+    setInterval(createHeart, 200);
+    drawHearts();
+</script>
+
+</html>
