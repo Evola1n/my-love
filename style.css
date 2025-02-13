@@ -1,167 +1,319 @@
-/* Сброс отступов */
+/* Подключаем необходимые шрифты */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap');
+
+/* Сброс стилей */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Фон страницы */
+/* Стиль для тела страницы */
 body {
-    background: linear-gradient(to right, #ffccff, #ffe6f7);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
     overflow-x: hidden;
+    position: relative;
 }
 
-/* Заголовок страницы */
+/* Анимация падающих сердечек */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: radial-gradient(#ffafbd 1px, transparent 1px), radial-gradient(#ffc3a0 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    animation: animateBackground 20s linear infinite;
+    z-index: -2;
+    opacity: 0.3;
+}
+
+@keyframes animateBackground {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Заголовок */
 h1 {
     text-align: center;
-    padding: 30px 0;
-    color: #99004d;
-    font-size: 48px;
-    font-weight: bold;
+    font-size: 4em;
+    margin-top: 50px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+    font-family: 'Dancing Script', cursive;
+    position: relative;
+    animation: glow 2s ease-in-out infinite alternate;
 }
 
-/* Стиль хронологии */
+/* Анимация свечения заголовка */
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255,255,255,0.8);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(255,255,255,1);
+    }
+}
+
+/* Парящий холст с сердечками */
+#heartCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Временная шкала */
 .timeline {
     position: relative;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 40px 0;
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 0 20px;
 }
 
-/* Линия хронологии */
 .timeline::after {
     content: '';
     position: absolute;
-    width: 6px;
-    background-color: #b3003b;
+    width: 4px;
+    background-color: #fff;
     top: 0;
     bottom: 0;
     left: 50%;
-    margin-left: -3px;
+    margin-left: -2px;
+    opacity: 0.7;
 }
 
-/* Блок события */
+/* Элементы событий */
 .entry {
-    padding: 20px 40px;
     position: relative;
     width: 50%;
+    padding: 20px 40px;
     box-sizing: border-box;
 }
 
 .entry.left {
     left: 0;
+    transform: translateX(-100px);
+    opacity: 0;
+    animation: slideInLeft 1s forwards;
 }
 
 .entry.right {
     left: 50%;
+    transform: translateX(100px);
+    opacity: 0;
+    animation: slideInRight 1s forwards;
 }
 
-/* Кружок на линии */
-.entry::before {
+.entry:nth-child(odd) {
+    margin-top: 50px;
+}
+
+.entry-content {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px 30px;
+    position: relative;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 8px 32px rgba(31,38,135,0.37);
+    transition: transform 0.3s ease;
+}
+
+.entry:hover .entry-content {
+    transform: translateY(-15px);
+}
+
+.entry.left .entry-content::after {
     content: '';
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-    border: 6px solid #b3003b;
-    top: 30px;
-    border-radius: 50%;
-    z-index: 1;
+    top: 20px;
+    right: -15px;
+    border-width: 15px 0 15px 15px;
+    border-style: solid;
+    border-color: transparent transparent transparent rgba(255, 255, 255, 0.8);
 }
 
-.entry.left::before {
-    right: -13px;
+.entry.right .entry-content::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: -15px;
+    border-width: 15px 15px 15px 0;
+    border-style: solid;
+    border-color: transparent rgba(255, 255, 255, 0.8) transparent transparent;
 }
 
-.entry.right::before {
-    left: -13px;
-}
-
-/* Контент события */
-.entry-content {
-    padding: 20px 30px;
-    background-color: #ffcce0;
-    position: relative;
-    border-radius: 6px;
-}
-
-.entry-content img {
-    width: 100%;
-    border-radius: 6px;
+.date {
+    font-size: 1.5em;
+    color: #ff6f91;
     margin-bottom: 15px;
+    font-weight: bold;
+    position: relative;
 }
 
-.entry-content .date {
-    font-weight: bold;
-    color: #ff0066;
-    font-size: 22px;
-    margin-bottom: 10px;
+.date i {
+    margin-right: 10px;
 }
 
 .entry-content p {
-    color: #660033;
-    font-size: 18px;
-    line-height: 1.8;
+    font-size: 1.2em;
+    line-height: 1.6em;
+    margin: 0;
 }
 
-/* Финальное сообщение */
-.entry.final .entry-content {
-    background-color: #ffb3d9;
+.entry-content img, .entry-content video {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.entry-content img:hover, .entry-content video:hover {
+    transform: scale(1.05);
+}
+
+.entry-content audio {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.final .entry-content {
+    background: transparent;
+    box-shadow: none;
     text-align: center;
 }
 
-.entry.final h2 {
-    font-size: 36px;
-    color: #b30047;
+.final .entry-content h2 {
+    font-size: 3em;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
     margin-bottom: 20px;
+    animation: heartbeat 1.5s infinite;
 }
 
-.entry.final p {
-    font-size: 20px;
-    color: #800040;
-    margin-bottom: 30px;
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.1);
+    }
+    40% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1);
+    }
+    80% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
-.entry.final img {
-    width: 150px;
-    margin-top: 20px;
+.final .entry-content p {
+    font-size: 1.5em;
+    color: #fff;
+    margin-bottom: 50px;
 }
 
-/* Адаптивность для мобильных устройств */
+.fa-heart {
+    color: #ff6f91;
+    animation: heartbeat 1.5s infinite;
+}
+
+.fa-heartbeat {
+    color: #ff6f91;
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes slideInLeft {
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Медиа-запросы для адаптивности */
+
 @media screen and (max-width: 768px) {
+    .timeline::after {
+        left: 90px;
+    }
+
     .entry {
         width: 100%;
-        padding-left: 70px;
-        padding-right: 25px;
-        left: 0;
+        padding-left: 120px;
+        padding-right: 30px;
+        margin-bottom: 50px;
     }
 
-    .entry::before {
+    .entry.right, .entry.left {
+        left: 0%;
+    }
+
+    .entry-content::after {
         left: 60px;
     }
+}
 
-    .timeline::after {
+@media screen and (max-width: 480px) {
+    .entry {
+        padding-left: 20px;
+    }
+
+    .entry-content::after {
         left: 30px;
     }
-
-    .entry.left,
-    .entry.right {
-        left: 0;
-    }
-
-    .entry.left::before,
-    .entry.right::before {
-        left: 60px;
-    }
-}
-.entry-content video {
-    width: 100%;
-    border-radius: 6px;
-    margin-bottom: 15px;
-}
-.entry-content audio {
-    width: 100%;
-    margin-top: 15px;
 }
 
+/* Стили для кнопки управления музыкой */
+.music-control {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: background 0.3s;
+    z-index: 1000;
+}
+
+.music-control:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+.music-control i {
+    font-size: 1.5em;
+    color: #ff6f91;
+}
+
+/* Эффект курсора в виде сердечка */
+body {
+    cursor: url('images/heart-cursor.png'), auto;
+}
+
+/* Конец стилей */
