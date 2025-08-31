@@ -1,0 +1,350 @@
+/* Подключаем необходимые шрифты */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap');
+
+/* Сброс стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Стиль для тела страницы */
+body {
+    background: linear-gradient(135deg, #ff9a9e 0%, lab(86.71% 12.95 11.47) 100%);
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Анимация падающих сердечек */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: radial-gradient(#ffafbd 1px, transparent 1px), radial-gradient(#ffc3a0 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    animation: animateBackground 20s linear infinite;
+    z-index: -2;
+    opacity: 0.3;
+}
+
+@keyframes animateBackground {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Заголовок */
+h1 {
+    text-align: center;
+    font-size: 4em;
+    margin-top: 50px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+    font-family: 'Dancing Script', cursive;
+    position: relative;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Анимация свечения заголовка */
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255,255,255,0.8);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(255,255,255,1);
+    }
+}
+
+/* Парящий холст с сердечками */
+#heartCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Временная шкала */
+.timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 0 20px;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: #fff;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+    opacity: 0.7;
+}
+
+/* Элементы событий */
+.entry {
+    position: relative;
+    width: 50%;
+    padding: 20px 40px;
+    box-sizing: border-box;
+}
+
+.entry.left {
+    left: 0;
+    transform: translateX(-100px);
+    opacity: 0;
+    animation: slideInLeft 1s forwards;
+}
+
+.entry.right {
+    left: 50%;
+    transform: translateX(100px);
+    opacity: 0;
+    animation: slideInRight 1s forwards;
+}
+
+.entry:nth-child(odd) {
+    margin-top: 50px;
+}
+
+.entry-content {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px 30px;
+    position: relative;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 8px 32px rgba(31,38,135,0.37);
+    transition: transform 0.3s ease;
+}
+
+.entry:hover .entry-content {
+    transform: translateY(-15px);
+}
+
+.entry.left .entry-content::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: -15px;
+    border-width: 15px 0 15px 15px;
+    border-style: solid;
+    border-color: transparent transparent transparent rgba(255, 255, 255, 0.8);
+}
+
+.entry.right .entry-content::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: -15px;
+    border-width: 15px 15px 15px 0;
+    border-style: solid;
+    border-color: transparent rgba(255, 255, 255, 0.8) transparent transparent;
+}
+
+.date {
+    font-size: 1.5em;
+    color: #ff6f91;
+    margin-bottom: 15px;
+    font-weight: bold;
+    position: relative;
+}
+
+.date i {
+    margin-right: 10px;
+}
+
+.entry-content p {
+    font-size: 1.2em;
+    line-height: 1.6em;
+    margin: 0;
+}
+
+.entry-content img, .entry-content video {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.entry-content img:hover, .entry-content video:hover {
+    transform: scale(1.05);
+}
+
+.entry-content audio {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.final .entry-content {
+    background: transparent;
+    box-shadow: none;
+    text-align: center;
+}
+
+.final .entry-content h2 {
+    font-size: 3em;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+    margin-bottom: 20px;
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.1);
+    }
+    40% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1);
+    }
+    80% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.final .entry-content p {
+    font-size: 1.5em;
+    color: #fff;
+    margin-bottom: 50px;
+}
+
+.fa-heart {
+    color: #ff6f91;
+    animation: heartbeat 1.5s infinite;
+}
+
+.fa-heartbeat {
+    color: #ff6f91;
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes slideInLeft {
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Медиа-запросы для адаптивности */
+
+@media screen and (max-width: 768px) {
+    .timeline::after {
+        left: 90px;
+    }
+
+    .entry {
+        width: 100%;
+        padding-left: 120px;
+        padding-right: 30px;
+        margin-bottom: 50px;
+    }
+
+    .entry.right, .entry.left {
+        left: 0%;
+    }
+
+    .entry-content::after {
+        left: 60px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .entry {
+        padding-left: 20px;
+    }
+
+    .entry-content::after {
+        left: 30px;
+    }
+}
+
+/* Стили для кнопки управления музыкой */
+.music-control {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: background 0.3s;
+    z-index: 1000;
+}
+
+.music-control:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+.music-control i {
+    font-size: 1.5em;
+    color: #ff6f91;
+}
+
+
+.entry-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* раздвигает контент по вертикали */
+    height: 100%; /* или фиксированная высота карточки */
+    padding-bottom: 20px; /* место для кнопки */
+}
+.entry-content button {
+    align-self: center; /* центр по горизонтали */
+    background: rgba(255,255,255,0.8);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
+    font-size: 1.2em;
+    font-family: cursive;
+    width: 200px;
+}
+.entry-content button:hover {
+    background: lab(86.71% 12.95 11.47);
+    transition: 0.5s ease;
+}
+p{
+    font-size: 27px;
+    color: #000000;
+    margin: 20px;
+    font-family: cursive;
+    text-align: center;
+    text-shadow: 0 0 5px rgba(0,0,0,0.1);
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+}
+
+
